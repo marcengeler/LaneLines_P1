@@ -1,23 +1,33 @@
 # **Finding Lane Lines on the Road** 
 
-## Writeup Template
+[image1]: ./grayscale.png "Grayscale"
+[image2]: ./edges.png "Edges"
+[image3]: ./roi_adaptive.png "Adaptive Region of Interest"
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file. But feel free to use some other method and submit a pdf if you prefer.
+## Writeup
 
----
+### Grayscale Canny-Edge
 
-**Finding Lane Lines on the Road**
+To start off, i used a grayscale image and a canny edge algorithm based on fixed thresholds to identify and edges.
 
-The goals / steps of this project are the following:
-* Make a pipeline that finds lane lines on the road
-* Reflect on your work in a written report
+![alt text][image1]
 
+Using fixed thresholds for the canny edge detection and filtering all the lines outside of a trapeziodal region of interest, the resulting image looked promising
 
-[//]: # (Image References)
+![alt_text][image2]
 
-[image1]: ./examples/grayscale.jpg "Grayscale"
+### Hough Algorithm on Videos
 
----
+Applying a basic hough algorithm on videos showed promisinig results, but failed repeatedly on the last video. Testing on all three videos allowed me to get more insight in what are of code is prone to errors.
+First of all, I changed the region of interest to a relative region of interest, based on the image size. This way i could easily change the cropped image based on the video size (especially for the last one).
+This worked out quite well and was an easy addition to the code.
+
+![alt_text][image3]
+
+### Extrapolation of Hough Lines
+
+It was clear that we have to find two distinct lines with two different slopes. So i calculated all the slopes for all the lines and then the mean slope of all points.
+Then i divided all the lines into lines with slope < slope_{mean} and lines with slope >= slope_{mean}
 
 ### Reflection
 
